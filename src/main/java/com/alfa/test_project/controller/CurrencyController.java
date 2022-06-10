@@ -2,12 +2,9 @@ package com.alfa.test_project.controller;
 
 
 import com.alfa.test_project.dto.CurrencyDto;
-import com.alfa.test_project.dto.GifsDto;
 import com.alfa.test_project.service.CurrencyService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.time.LocalDate;
 
 @RestController
 @AllArgsConstructor
