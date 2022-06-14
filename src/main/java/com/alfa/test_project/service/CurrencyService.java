@@ -6,8 +6,7 @@ import com.alfa.test_project.feign.dto.FiegnRatesDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import java.time.Duration;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -20,15 +19,16 @@ public class CurrencyService {
 
     private final CurrencyFeignClient currencyFeignClient;
 
-    public CurrencyDto getLatestRateByCurrencyCode(String code) {
+    public BigDecimal getLatestRateByCurrencyCode(String code) {
         FiegnRatesDto rateByCode = currencyFeignClient.getRateByCode(APP_ID, code);
-        return new CurrencyDto(code, rateByCode.getRates().get(code));
+        System.out.println(rateByCode);
+        return new CurrencyDto(code, rateByCode.getRates().get(code)).getRate();
     }
 
-    public CurrencyDto getRateByDate(String code) {
+    public BigDecimal getRateByDate(String code) {
         String date = LocalDate.now().minusDays(1).format(DateTimeFormatter.ofPattern("uuuu-MM-dd"));
-        System.out.println(date);
-        FiegnRatesDto rateByDate = currencyFeignClient.getRateByDate(APP_ID, code, date);
-        return new CurrencyDto(code, rateByDate.getRates().get(code));
+        BigDecimal rate = currencyFeignClient.getRateByDate(APP_ID, code, date).getRates().get(code);
+        System.out.println(rate);
+        return rate;
     }
 }
